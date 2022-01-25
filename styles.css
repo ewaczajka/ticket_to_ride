@@ -43,7 +43,18 @@ body {
 	border-bottom: 1px solid rgba(181, 188, 204, 0.3);
 }
 
+.standings__table {
+	padding: 13px 27px 29px 20px;
+}
+
 .standings__row {
+	display: flex;
+	align-items: center;
+}
+
+.standings__row__icon {
+	width: 36px;
+	text-align: center;
 }
 
 .medal {
@@ -52,4 +63,17 @@ body {
 
 .number {
 	font-size: 25px;
+}
+
+.standings__row__name {
+	font-size: 18px;
+	width: 150px;
+	padding: 17px 10px;
+}
+
+.standings__row__score {
+	font-size: 18px;
+	color: #A7B0BD;
+	text-align: right;
+	width: 82px;
 }
