@@ -5,6 +5,8 @@
 
 body {
 	background-color: #F5F7FB;
+	font-family: Roboto, sans-serif;
+	font-weight: bold;
 }
 
 .logo_box {
@@ -15,8 +17,39 @@ body {
 .logo {
 	width: 180px;
 	height: 36px;
-	margin-top: 16px;
-	margin-left: 16px;
+	margin: 16px 0 0 16px;
 	object-fit: cover;
 	object-position: 100% 50%;
+}
+
+.main {
+	position: relative;
+}
+
+.standings {
+	position: absolute;
+	width: 335px;
+	right: 20px;
+	top: 20px;
+	background-color: #FFFFFF;
+	box-shadow: 0px 0px 4px rgba(181, 188, 204, 0.2);
+	border-radius: 5px;
+}
+
+.standings__title {
+	font-size: 24px;
+	padding: 22px 0 20px;
+	text-align: center;
+	border-bottom: 1px solid rgba(181, 188, 204, 0.3);
+}
+
+.standings__row {
+}
+
+.medal {
+	font-size: 36px;
+}
+
+.number {
+	font-size: 25px;
 }
