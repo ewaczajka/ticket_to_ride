@@ -1,6 +1,7 @@
-* {
+*, *:before, *:after {
 	margin: 0;
 	padding: 0;
+	box-sizing: border-box;
 }
 
 body {
@@ -60,6 +61,26 @@ body {
 	grid-column: span 12;
 }
 
+/* components */
+.text-box {
+	width: 100%;
+	display: block;
+	border: 1px solid #F5F7FB;
+	background-color: #F5F7FB;
+	border-radius: 4px;
+	margin: 5px 0;
+}
+
+.text-box:focus {
+	background-color: rgba(255, 255, 255, 0.2);
+	border: 1px solid #731DFF;
+	outline: none;
+}
+
+.toggle {
+
+}
+
 /* views */
 
 .logo_box {
@@ -80,7 +101,9 @@ body {
 }
 
 .main__player {
-
+	padding: 0 10px;
+	width: 80px;
+	background: white;
 }
 
 .standings {
