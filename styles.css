@@ -9,6 +9,52 @@ body {
 	font-weight: bold;
 }
 
+/* grid */
+.grid_container {
+	display: grid;
+	grid-template-columns:  1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+.column1 {
+	grid-column: span 1;
+}
+.column2 {
+	grid-column: span 2;
+}
+.column3 {
+	grid-column: span 3;
+}
+.column4 {
+	grid-column: span 4;
+}
+.column5 {
+	grid-column: span 5;
+}
+.column6 {
+	grid-column: span 6;
+}
+.column7 {
+	grid-column: span 7;
+}
+.column8 {
+	grid-column: span 8;
+}
+.column9 {
+	grid-column: span 9;
+}
+.column10 {
+	grid-column: span 10;
+}
+.column11 {
+	grid-column: span 11;
+}
+.column12 {
+	grid-column: span 12;
+}
+
+
+/* views */
+
 .logo_box {
 	background-color: #FFFFFF;
 	height: 68px;
@@ -26,11 +72,11 @@ body {
 	position: relative;
 }
 
+.main__player {
+
+}
+
 .standings {
-	position: absolute;
-	width: 335px;
-	right: 20px;
-	top: 20px;
 	background-color: #FFFFFF;
 	box-shadow: 0px 0px 4px rgba(181, 188, 204, 0.2);
 	border-radius: 5px;
@@ -50,6 +96,7 @@ body {
 .standings__row {
 	display: flex;
 	align-items: center;
+	position: relative;
 }
 
 .standings__row__icon {
@@ -67,13 +114,12 @@ body {
 
 .standings__row__name {
 	font-size: 18px;
-	width: 150px;
 	padding: 17px 10px;
 }
 
 .standings__row__score {
 	font-size: 18px;
 	color: #A7B0BD;
-	text-align: right;
-	width: 82px;
+	position: absolute;
+	right: 0;
 }
