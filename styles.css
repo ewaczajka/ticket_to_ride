@@ -86,6 +86,9 @@ body {
 	background: var(--c-lightgrey);
 	border-radius: 4px;
 	margin: 5px 0;
+	font-weight: bold;
+	text-align: center;
+	padding: 5px 0;
 }
 
 .text-box:focus {
@@ -113,9 +116,9 @@ body {
 	object-position: 100% 50%;
 }
 
-.main {
-	position: relative;
-}
+/*.main {*/
+	/*position: relative;*/
+/*}*/
 
 .main__side_info__part__title {
 	font-size: var(--fs2);
@@ -123,13 +126,15 @@ body {
 
 .main__side_info__part__details {
 	font-size: var(--fs3);
-	color: #5E6570;
+	color: var(--c-darkgrey);
 }
 
 .main__player {
-	padding: 0 10px;
-	width: 80px;
-	background: white;
+	padding: 10px 10px;
+	width: 100px;
+	background: var(--c-white);
+	box-shadow: 0px 0px 4px var(--c-shadow);
+	border-radius: 5px;
 }
 
 .main__player__profile__logo {
@@ -137,7 +142,17 @@ body {
 	height: 44px;
 	border-radius: 50%;
 	background: var(--c-blue);
-	margin: auto;
+	margin: 10px auto;	
+	color: var(--c-white);
+	font-size: 21px;
+	text-align: center;
+	padding: 10px 0;
+}
+
+.main__player__profile__name {
+	font-size: var(--fs3);
+	text-align: center;
+	margin: 10px auto;
 }
 
 .main__player__part__subsum {
@@ -146,7 +161,7 @@ body {
 }
 
 .standings {
-	background: #FFFFFF;
+	background: var(--c-white);
 	box-shadow: 0px 0px 4px var(--c-shadow);
 	border-radius: 5px;
 }
