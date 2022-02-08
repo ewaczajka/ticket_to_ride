@@ -102,7 +102,7 @@ body {
 	display: block;
 	width: 40px;
 	height: 22px;
-	margin: 4px;
+	margin: 15px auto 0;
 }
 
 .switch input {
@@ -157,13 +157,38 @@ input:checked + .slider:before {
 	object-position: 100% 50%;
 }
 
+.main {
+	position: relative;
+}
+
+.main__side_info__empty {
+	height: 80px;
+	margin: 10px;
+}
+
 .main__side_info__part__title {
 	font-size: var(--fs2);
+	margin: 20px 0 10px;
+}
+
+.main__side_info__part__title::before {
+	position: absolute;
+	display: block;
+	content: "";
+	height: 1px;
+	left: -20px;
+	right: -20px;
+	background: var(--c-shadow);
 }
 
 .main__side_info__part__details {
 	font-size: var(--fs3);
 	color: var(--c-darkgrey);
+}
+
+.main__side_info__part__details p {
+	padding: 6px 0 5px;
+	margin: 5px 0;
 }
 
 .main__player {
@@ -195,6 +220,8 @@ input:checked + .slider:before {
 .main__player__part__subsum {
 	font-size: var(--fs3);
 	text-align: center;
+	padding: 4px 0 1px;
+	margin: 20px 0 10px;
 }
 
 .standings {
