@@ -103,6 +103,7 @@ body {
 	width: 40px;
 	height: 22px;
 	margin: 15px auto 0;
+	cursor: pointer;
 }
 
 .switch input {
@@ -174,6 +175,7 @@ input:checked + .slider:before {
 	right: -20px;
 	background: var(--c-shadow);
 	margin-top: 5px;
+	z-index: 1;
 }
 
 .side-info__part__title {
@@ -184,6 +186,7 @@ input:checked + .slider:before {
 .side-info__part__details {
 	font-size: var(--fs3);
 	color: var(--c-darkgrey);
+	min-width: 135px;
 }
 
 .side-info__part__details p {
@@ -197,6 +200,8 @@ input:checked + .slider:before {
 	background: var(--c-white);
 	box-shadow: 0px 0px 4px var(--c-shadow);
 	border-radius: 5px;
+	position: relative;
+	/*z-index: -1;*/
 }
 
 .player__profile__logo {
@@ -217,6 +222,8 @@ input:checked + .slider:before {
 	margin: 10px auto;
 }
 
+.player__profile {}
+
 .player__part__subsum {
 	font-size: var(--fs3);
 	text-align: center;
@@ -224,12 +231,35 @@ input:checked + .slider:before {
 	margin: 20px 0 10px;
 }
 
+.player__delete {
+	position: absolute;
+	bottom: -25px;
+	font-size: var(--fs3);
+	margin: 0 -10px;
+	width: 100%;
+	text-align: center;
+	color: var(--c-red);
+	text-decoration-line: underline;
+	cursor: pointer;
+}
+
+.player__add {
+	width: 100px;
+	padding: 10px;
+}
+
+
+.player__add .player__profile__logo {
+	background: var(--c-darkgrey);
+	cursor: pointer;
+}
+
 .standings {
 	background: var(--c-white);
 	box-shadow: 0px 0px 4px var(--c-shadow);
 	border-radius: 5px;
 	position: relative;
-	z-index: 1;
+	z-index: 2;
 }
 
 .standings__title {
