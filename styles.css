@@ -146,6 +146,10 @@ input:checked + .slider:before {
 	background: var(--c-white);
 }
 
+.hide {
+	display: none;
+}
+
 /* views */
 
 .logo-box {
@@ -207,7 +211,7 @@ input:checked + .slider:before {
 }
 
 .player__profile__logo,
-.player__add__logo {
+.player__add__btn {
 	position: relative;
 	width: 44px;
 	height: 44px;
@@ -326,7 +330,7 @@ input:checked + .slider:before {
 	padding: 10px;
 }
 
-.player__add__logo {
+.player__add__btn {
 	background: var(--c-darkgrey);
 	cursor: pointer;
 }
