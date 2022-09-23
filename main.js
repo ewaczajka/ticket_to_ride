@@ -1,7 +1,20 @@
-const player = document.querySelector('.player')
-const playerBox = document.querySelector('.players')
-const addPlayer = document.querySelector('.player__add')
-const addPlayerBtn = addPlayer.querySelector('.player__add__btn')
+const player, playerBox, addPlayer, addPlayerBtn
+
+const main = () => {
+    prepereDOMElements()
+    prepereDOMEvents()
+}
+
+const prepereDOMElements = () => {
+    player = document.querySelector('.player')
+    playerBox = document.querySelector('.players')
+    addPlayer = document.querySelector('.player__add')
+    addPlayerBtn = addPlayer.querySelector('.player__add__btn')
+}
+
+const prepereDOMEvenst = () => {
+    addPlayerBtn.addEventListener('click', addNewPlayer)
+}
 
 const addNewPlayer = () => {
     const newPlayer = player.cloneNode(true)
@@ -12,4 +25,4 @@ const addNewPlayer = () => {
     }
 }
 
-addPlayerBtn.addEventListener('click', addNewPlayer)
+document.addEventListener('DOMContentLoaded', main)
