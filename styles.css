@@ -216,12 +216,13 @@ input:checked + .slider:before {
 	width: 44px;
 	height: 44px;
 	border-radius: 50%;
-	background: var(--c-blue);
 	margin: 10px auto 0;	
 	color: var(--c-white);
 	font-size: 21px;
 	text-align: center;
 	padding: 10px 0;
+	background: var(--c-darkgrey);
+	cursor: pointer;
 }
 
 .tooltip {
@@ -286,6 +287,7 @@ input:checked + .slider:before {
 	left: 5px;
 	color: var(--c-white);
 	display: none;
+	pointer-events: none;
 }
 
 .tooltip__color:hover i,
@@ -328,11 +330,6 @@ input:checked + .slider:before {
 .player__add {
 	width: 100px;
 	padding: 10px;
-}
-
-.player__add__btn {
-	background: var(--c-darkgrey);
-	cursor: pointer;
 }
 
 .player__add__text {
