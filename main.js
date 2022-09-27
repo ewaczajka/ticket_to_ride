@@ -1,4 +1,36 @@
-let player, playerBox, addPlayer, addPlayerBtn, players, playerLogo, playerName, tooltip
+let playerTemplate, addPlayerBtn, addPlayer, players = []
+
+class Player {
+    constructor () {
+        this.html = this.buildTemplate()
+        this.name = ''
+        this.color = ''
+        this.scores = {
+            trains: {
+                length1: 0,
+                length2: 0,
+                length3: 0,
+                length4: 0,
+                length6: 0,
+                length8: 0,
+            },
+            routes: {
+                completed: 0,
+                uncompleted: 0,
+            },
+            longestRoute: false,
+            stations: 0,
+        }
+    }
+
+    buildTemplate() {
+        if (players.length === 0) return playerTemplate
+        let newPlayer = playerTemplate.cloneNode(true)
+        newPlayer.querySelectorAll('form').forEach(el => el.reset())
+        addPlayer.before(newPlayer)
+        return newPlayer
+    }
+}
 
 const main = () => {
     prepereDOMElements()
@@ -6,65 +38,22 @@ const main = () => {
 }
 
 const prepereDOMElements = () => {
-    player = document.querySelector('.player')
-    playerBox = document.querySelector('.players')
+    playerTemplate = document.querySelector('.player')
+    players = [new Player]
     addPlayer = document.querySelector('.player__add')
     addPlayerBtn = document.querySelector('.player__add__btn')
-    playerLogo = document.querySelector('.player__profile__logo')
-    playerName = document.querySelector('.player__profile__name')
-    tooltip = document.querySelector('.tooltip')
 }
 
 const prepereDOMEvents = () => {
     addPlayerBtn.addEventListener('click', addNewPlayer)
-    playerBox.addEventListener('click', editPlayerLogo)
+
 }
 
 const addNewPlayer = () => {
-    const newPlayer = player.cloneNode(true)
-    addPlayer.before(newPlayer)
-
-    if (playerBox.childElementCount > 5) {
+    players.push(new Player())
+    if (players.length === 5) {
         addPlayer.classList.add('hide')
     }
-}
-
-const editPlayerLogo = (e) => {
-    if (e.target.matches('.player__profile__logo')) {
-        tooltip = e.target.querySelector('.tooltip')
-        tooltip.classList.toggle('hide')
-        return
-    }
-    if (e.target.matches('.tooltip__color')) {
-        changeColor(e)
-    }
-}
-
-const changeColor = (e) => {
-    const profileLogo = e.target.closest('.player__profile__logo')
-    switch (true) {
-        case e.target.classList.contains('blue'):
-            profileLogo.classList.remove('blue', 'red', 'green', 'yellow', 'black')
-            profileLogo.classList.add('blue')
-            break
-        case e.target.classList.contains('red'):
-            profileLogo.classList.remove('blue', 'red', 'green', 'yellow', 'black')
-            profileLogo.classList.add('red')
-            break
-        case e.target.classList.contains('green'):
-            profileLogo.classList.remove('blue', 'red', 'green', 'yellow', 'black')
-            profileLogo.classList.add('green')
-            break
-        case e.target.classList.contains('yellow'):
-            profileLogo.classList.remove('blue', 'red', 'green', 'yellow', 'black')
-            profileLogo.classList.add('yellow')
-            break
-        case e.target.classList.contains('black'):
-            profileLogo.classList.remove('blue', 'red', 'green', 'yellow', 'black')
-            profileLogo.classList.add('black')
-            break
-    }
-    e.target.closest('.tooltip').classList.add('hide')
 }
 
 document.addEventListener('DOMContentLoaded', main)
