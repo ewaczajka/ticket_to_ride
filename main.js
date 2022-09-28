@@ -21,6 +21,9 @@ class Player {
             longestRoute: false,
             stations: 0,
         }
+
+        this.initiateEvents()
+        this.updateLogo()
     }
 
     buildTemplate() {
@@ -29,6 +32,30 @@ class Player {
         newPlayer.querySelectorAll('form').forEach(el => el.reset())
         addPlayer.before(newPlayer)
         return newPlayer
+    }
+
+    initiateEvents() {
+        let xxx = this 
+        let name = this.html.querySelector('.player__profile__name')
+        let logoLetter = this.html.querySelector('.player__profile__logo p')
+
+        name.addEventListener('keyup', (event) => { 
+            xxx.name = name.value
+            logoLetter.textContent = `${xxx.name.charAt(0).toUpperCase()}`
+        } )
+    }
+
+    updateLogo() {
+        let xxx = this
+        let logo = this.html.querySelector('.player__profile__logo')
+        let tooltip = logo.querySelector('.tooltip')
+        logo.addEventListener('click', (event) => { tooltip.classList.toggle('hide') } )
+        const colors = tooltip.querySelectorAll('.tooltip__color')
+        colors.forEach(color => color.addEventListener('click', (event) => { 
+            xxx.color = color.dataset.color
+            logo.classList.remove('blue', 'red', 'green', 'yellow', 'black')
+            logo.classList.add(`${xxx.color}`)
+        } ))
     }
 }
 
