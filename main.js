@@ -47,7 +47,7 @@ class Player {
         this.elms.logo.addEventListener('click', (e) => { this.elms.tooltip.classList.toggle('hide') })
         this.elms.colors.forEach(c => c.addEventListener('click', (e) => { this.updateColor(c.dataset.color) }) )
         this.elms.trains.forEach(t => t.addEventListener('keyup', (e) => { this.updateTrainsScore(t.dataset.trainLenght, t.value) }) )
-        this.elms.routes.forEach(t => t.addEventListener('keyup', (e) => { this.updateRoutesScore(t.dataset.completed, t.value) }) )
+        this.elms.routes.forEach(r => r.addEventListener('keyup', (e) => { this.updateRoutesScore(r.dataset.completed, r.value) }) )
     }
 
     updateName() {
@@ -75,8 +75,6 @@ class Player {
         let sum = ((this.scores.routes.completed) | 0) - ((this.scores.routes.uncompleted | 0))
         this.elms.routesScore.textContent = `${sum} points`
     }
-
-
 }
 
 const main = () => {
@@ -105,7 +103,7 @@ const addNewPlayer = () => {
 
 const addNum = (str) => {
     let sum = 0
-    for (let i of str.split('+')) { sum += parseInt(i | 0)}
+    for (let i of str.split(/[, +;]/)) { sum += parseInt(i | 0)}
     return sum
 }
 
