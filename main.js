@@ -16,10 +16,7 @@ class Player {
         this.color = ''
         this.scores = {
             trains: {},
-            routes: {
-                completed: 0,
-                uncompleted: 0,
-            },
+            routes: {},
             longestRoute: false,
             stations: 0,
         }
@@ -39,6 +36,8 @@ class Player {
         this.elms['colors'] = newPlayer.querySelectorAll('.tooltip__color')
         this.elms['trains'] = newPlayer.querySelectorAll('[data-field-type="train"]')
         this.elms['trainsScore'] = newPlayer.querySelector('[data-score="train"]')
+        this.elms['routes'] = newPlayer.querySelectorAll('[data-field-type="route"]')
+        this.elms['routesScore'] = newPlayer.querySelector('[data-score="route"]')
         this.elms['html'] = newPlayer
         
     }
@@ -48,6 +47,7 @@ class Player {
         this.elms.logo.addEventListener('click', (e) => { this.elms.tooltip.classList.toggle('hide') })
         this.elms.colors.forEach(c => c.addEventListener('click', (e) => { this.updateColor(c.dataset.color) }) )
         this.elms.trains.forEach(t => t.addEventListener('keyup', (e) => { this.updateTrainsScore(t.dataset.trainLenght, t.value) }) )
+        this.elms.routes.forEach(t => t.addEventListener('keyup', (e) => { this.updateRoutesScore(t.dataset.completed, t.value) }) )
     }
 
     updateName() {
@@ -65,11 +65,17 @@ class Player {
         this.scores.trains[lgth] = num
         let sum = 0
         Object.keys(this.scores.trains).forEach(key => {
-            if (this.scores.trains[key] === '') this.scores.trains[key] = 0
-            sum += parseInt(this.scores.trains[key]) * trainPoints[key]
+            sum += parseInt(this.scores.trains[key] | 0) * trainPoints[key]
         })
         this.elms.trainsScore.textContent = `${sum} points`
     }
+
+    updateRoutesScore(cmpl, num) {
+        this.scores.routes[cmpl] = addNum(num)
+        let sum = ((this.scores.routes.completed) | 0) - ((this.scores.routes.uncompleted | 0))
+        this.elms.routesScore.textContent = `${sum} points`
+    }
+
 
 }
 
@@ -95,6 +101,12 @@ const addNewPlayer = () => {
     if (players.length === 5) {
         addPlayer.classList.add('hide')
     }
+}
+
+const addNum = (str) => {
+    let sum = 0
+    for (let i of str.split('+')) { sum += parseInt(i | 0)}
+    return sum
 }
 
 document.addEventListener('DOMContentLoaded', main)
