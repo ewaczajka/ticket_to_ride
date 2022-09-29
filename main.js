@@ -1,19 +1,21 @@
 let playerTemplate, addPlayerBtn, addPlayer, players = []
 
+const trainPoints = {
+    1: 1,
+    2: 2,
+    3: 4,
+    4: 7,
+    6: 15,
+    8: 21,
+}
+
 class Player {
     constructor () {
         this.elms = {}
         this.name = ''
         this.color = ''
         this.scores = {
-            trains: {
-                length1: 0,
-                length2: 0,
-                length3: 0,
-                length4: 0,
-                length6: 0,
-                length8: 0,
-            },
+            trains: {},
             routes: {
                 completed: 0,
                 uncompleted: 0,
@@ -35,7 +37,8 @@ class Player {
         this.elms['tooltip'] = newPlayer.querySelector('.tooltip')
         this.elms['logo'] = newPlayer.querySelector('.player__profile__logo')
         this.elms['colors'] = newPlayer.querySelectorAll('.tooltip__color')
-        this.elms['tranis'] = newPlayer.querySelectorAll('[data-field-type="train"]')
+        this.elms['trains'] = newPlayer.querySelectorAll('[data-field-type="train"]')
+        this.elms['trainsScore'] = newPlayer.querySelector('[data-score="train"]')
         this.elms['html'] = newPlayer
         
     }
@@ -44,16 +47,28 @@ class Player {
         this.elms.name.addEventListener('keyup', (e) => { this.updateName() })
         this.elms.logo.addEventListener('click', (e) => { this.elms.tooltip.classList.toggle('hide') })
         this.elms.colors.forEach(c => c.addEventListener('click', (e) => { this.updateColor(c.dataset.color) }) )
+        this.elms.trains.forEach(t => t.addEventListener('keyup', (e) => { this.updateTrainsScore(t.dataset.trainLenght, t.value) }) )
     }
 
     updateName() {
         this.name = this.elms.name.value
         this.elms.logoLetter.textContent = this.name.charAt(0).toUpperCase()
     }
+
     updateColor(color) {
         this.color = color
         this.elms.logo.classList.remove('blue', 'red', 'green', 'yellow', 'black')
         this.elms.logo.classList.add(color)
+    }
+
+    updateTrainsScore(lgth, num) {
+        this.scores.trains[lgth] = num
+        let sum = 0
+        Object.keys(this.scores.trains).forEach(key => {
+            if (this.scores.trains[key] === '') this.scores.trains[key] = 0
+            sum += parseInt(this.scores.trains[key]) * trainPoints[key]
+        })
+        this.elms.trainsScore.textContent = `${sum} points`
     }
 
 }
