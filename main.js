@@ -2,7 +2,7 @@ let playerTemplate, addPlayerBtn, addPlayer, players = []
 
 class Player {
     constructor () {
-        this.html = this.buildTemplate()
+        this.elms = {}
         this.name = ''
         this.color = ''
         this.scores = {
@@ -22,41 +22,40 @@ class Player {
             stations: 0,
         }
 
+        this.buildTemplate()
         this.initiateEvents()
-        this.updateLogo()
     }
 
     buildTemplate() {
-        if (players.length === 0) return playerTemplate
-        let newPlayer = playerTemplate.cloneNode(true)
-        newPlayer.querySelectorAll('form').forEach(el => el.reset())
+        let newPlayer = playerTemplate.content.firstElementChild.cloneNode(true)
         addPlayer.before(newPlayer)
-        return newPlayer
+
+        this.elms['name'] = newPlayer.querySelector('.player__profile__name')
+        this.elms['logoLetter'] = newPlayer.querySelector('.player__profile__logo p')
+        this.elms['tooltip'] = newPlayer.querySelector('.tooltip')
+        this.elms['logo'] = newPlayer.querySelector('.player__profile__logo')
+        this.elms['colors'] = newPlayer.querySelectorAll('.tooltip__color')
+        this.elms['tranis'] = newPlayer.querySelectorAll('[data-field-type="train"]')
+        this.elms['html'] = newPlayer
+        
     }
 
     initiateEvents() {
-        let xxx = this 
-        let name = this.html.querySelector('.player__profile__name')
-        let logoLetter = this.html.querySelector('.player__profile__logo p')
-
-        name.addEventListener('keyup', (event) => { 
-            xxx.name = name.value
-            logoLetter.textContent = `${xxx.name.charAt(0).toUpperCase()}`
-        } )
+        this.elms.name.addEventListener('keyup', (e) => { this.updateName() })
+        this.elms.logo.addEventListener('click', (e) => { this.elms.tooltip.classList.toggle('hide') })
+        this.elms.colors.forEach(c => c.addEventListener('click', (e) => { this.updateColor(c.dataset.color) }) )
     }
 
-    updateLogo() {
-        let xxx = this
-        let logo = this.html.querySelector('.player__profile__logo')
-        let tooltip = logo.querySelector('.tooltip')
-        logo.addEventListener('click', (event) => { tooltip.classList.toggle('hide') } )
-        const colors = tooltip.querySelectorAll('.tooltip__color')
-        colors.forEach(color => color.addEventListener('click', (event) => { 
-            xxx.color = color.dataset.color
-            logo.classList.remove('blue', 'red', 'green', 'yellow', 'black')
-            logo.classList.add(`${xxx.color}`)
-        } ))
+    updateName() {
+        this.name = this.elms.name.value
+        this.elms.logoLetter.textContent = this.name.charAt(0).toUpperCase()
     }
+    updateColor(color) {
+        this.color = color
+        this.elms.logo.classList.remove('blue', 'red', 'green', 'yellow', 'black')
+        this.elms.logo.classList.add(color)
+    }
+
 }
 
 const main = () => {
@@ -65,10 +64,10 @@ const main = () => {
 }
 
 const prepereDOMElements = () => {
-    playerTemplate = document.querySelector('.player')
-    players = [new Player]
+    playerTemplate = document.querySelector('#player-template')
     addPlayer = document.querySelector('.player__add')
     addPlayerBtn = document.querySelector('.player__add__btn')
+    players = [new Player, new Player]
 }
 
 const prepereDOMEvents = () => {
