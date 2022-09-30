@@ -8,6 +8,8 @@ const trainPoints = {
     6: 15,
     8: 21,
 }
+const longestRoutePoints = 10
+const stationPoints = 4
 
 class Player {
     constructor () {
@@ -38,6 +40,10 @@ class Player {
         this.elms['trainsScore'] = newPlayer.querySelector('[data-score="train"]')
         this.elms['routes'] = newPlayer.querySelectorAll('[data-field-type="route"]')
         this.elms['routesScore'] = newPlayer.querySelector('[data-score="route"]')
+        this.elms['longestRoute'] = newPlayer.querySelector('[data-field-type="longestRoute"]')
+        this.elms['longestRouteScore'] = newPlayer.querySelector('[data-score="longestRoute"]')
+        this.elms['stations'] = newPlayer.querySelector('[data-field-type="stations"]')
+        this.elms['stationsScore'] = newPlayer.querySelector('[data-score="stations"]')
         this.elms['html'] = newPlayer
         
     }
@@ -48,6 +54,8 @@ class Player {
         this.elms.colors.forEach(c => c.addEventListener('click', (e) => { this.updateColor(c.dataset.color) }) )
         this.elms.trains.forEach(t => t.addEventListener('keyup', (e) => { this.updateTrainsScore(t.dataset.trainLenght, t.value) }) )
         this.elms.routes.forEach(r => r.addEventListener('keyup', (e) => { this.updateRoutesScore(r.dataset.completed, r.value) }) )
+        this.elms.longestRoute.addEventListener('click', (e) => { this.updateLongestRouteScore() })
+        this.elms.stations.addEventListener('keyup', (e) => { this.updateStationsScore() })
     }
 
     updateName() {
@@ -71,9 +79,22 @@ class Player {
     }
 
     updateRoutesScore(cmpl, num) {
-        this.scores.routes[cmpl] = addNum(num)
+        this.scores.routes[cmpl] = addNums(num)
         let sum = ((this.scores.routes.completed) | 0) - ((this.scores.routes.uncompleted | 0))
         this.elms.routesScore.textContent = `${sum} points`
+    }
+
+    updateLongestRouteScore() {
+        this.scores.longestRoute = this.elms.longestRoute.checked
+        if (this.scores.longestRoute) 
+            this.elms.longestRouteScore.textContent = `${longestRoutePoints} points` 
+        else this.elms.longestRouteScore.textContent = `0 points` 
+    }
+    
+    updateStationsScore() {
+        this.scores.stations = this.elms.stations.value
+        let sum = parseInt(this.scores.stations | 0) * stationPoints
+        this.elms.stationsScore.textContent = `${sum} points` 
     }
 }
 
@@ -101,7 +122,7 @@ const addNewPlayer = () => {
     }
 }
 
-const addNum = (str) => {
+const addNums = (str) => {
     let sum = 0
     for (let i of str.split(/[, +;]/)) { sum += parseInt(i | 0)}
     return sum
