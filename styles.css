@@ -183,6 +183,7 @@ input:checked + .slider:before {
 	background: var(--c-shadow);
 	margin-top: 5px;
 	z-index: 1;
+	pointer-events: none;
 }
 
 .side-info__part__title {
@@ -318,6 +319,7 @@ input:checked + .slider:before {
 .player__delete {
 	position: absolute;
 	bottom: -25px;
+	padding-top: 10px;
 	font-size: var(--fs3);
 	margin: 0 -10px;
 	width: 100%;
@@ -325,11 +327,13 @@ input:checked + .slider:before {
 	color: var(--c-red);
 	text-decoration-line: underline;
 	cursor: pointer;
-	/*visibility: hidden;*/
+	opacity: 0%;
+	display: block;
 }
 
 .player:hover .player__delete {
-	visibility: visible;
+	/*visibility: visible;*/
+	opacity: 100%
 }
 
 .player__add {

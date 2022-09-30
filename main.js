@@ -1,13 +1,7 @@
-let playerTemplate, addPlayerBtn, addPlayer, players = []
+let playerTemplate, addPlayerBtn, addPlayer, players = [], playersScores = []
 
-const trainPoints = {
-    1: 1,
-    2: 2,
-    3: 4,
-    4: 7,
-    6: 15,
-    8: 21,
-}
+const standingsIconArr = ['🥇','🥈','🥉','4️⃣','5️⃣']
+const trainPoints = {1: 1, 2: 2, 3: 4, 4: 7, 6: 15, 8: 21}
 const longestRoutePoints = 10
 const stationPoints = 4
 
@@ -47,7 +41,6 @@ class Player {
         this.elms['stationsScore'] = newPlayer.querySelector('[data-score="stations"]')
         this.elms['deleteBtn'] = newPlayer.querySelector('.player__delete')
         this.elms['html'] = newPlayer
-        
     }
 
     initiateEvents() {
@@ -58,8 +51,7 @@ class Player {
         this.elms.routes.forEach(r => r.addEventListener('keyup', (e) => { this.updateRoutesScore(r.dataset.completed, r.value) }) )
         this.elms.longestRoute.addEventListener('click', (e) => { this.updateLongestRouteScore() })
         this.elms.stations.addEventListener('keyup', (e) => { this.updateStationsScore() })
-        //document.addEventListener('click', (e) => { this.toggleDeleteBtn(e) })
-        this.elms.deleteBtn.addEventListener('click', (e) => { this.deletePlayer() })
+        this.elms.deleteBtn.addEventListener('click', (e) => { deletePlayer(this) })
     }
 
     updateName() {
@@ -104,18 +96,17 @@ class Player {
         this.elms.stationsScore.textContent = `${sum} points`
         this.sumScores[3] = sum 
     }
+}
 
-    toggleDeleteBtn(el) {
-        if (this.elms.html.contains(el.target))  
-        this.elms.deleteBtn.classList.remove('hide')
-        else this.elms.deleteBtn.classList.add('hide')
+class PlayerScore {
+    constructor (name, score) {
+        this.name = name
+        this.score = this.calculateScore(score)
     }
 
-    deletePlayer() {
-       // debugger
-        console.log(players.indexOf(this))
-        players.splice(players.indexOf(this), 1)
-        debugger
+    calculateScore(s) {
+        let sum = s.reduce((partialSum, a) => partialSum + a, 0)
+        return sum
     }
 }
 
@@ -129,24 +120,48 @@ const prepereDOMElements = () => {
     addPlayer = document.querySelector('.player__add')
     addPlayerBtn = document.querySelector('.player__add__btn')
     players = [new Player, new Player]
-    standings = document.querySelector('.standings__table')
+    standingsIcon = document.querySelectorAll('.standings__row__icon')
+    standingsName = document.querySelectorAll('.standings__row__name')
+    standingsScore = document.querySelectorAll('.standings__row__score')
 }
 
 const prepereDOMEvents = () => {
     addPlayerBtn.addEventListener('click', addNewPlayer)
+    document.addEventListener('keyup', updatePlayersScores)
+    document.addEventListener('click', updatePlayersScores)
 }
 
 const addNewPlayer = () => {
     players.push(new Player())
-    if (players.length === 5) {
-        addPlayer.classList.add('hide')
-    }
+    if (players.length === 5) addPlayer.classList.add('hide')
+}
+
+const deletePlayer = (e) => {
+    players[players.indexOf(e)].elms.html.remove()
+    players.splice(players.indexOf(e), 1)
+    if (players.length < 5) addPlayer.classList.remove('hide')
 }
 
 const addNums = (str) => {
     let sum = 0
     for (let i of str.split(/[, +;]/)) { sum += parseInt(i | 0)}
     return sum
+}
+
+const updatePlayersScores = () => {
+    playersScores = []
+    players.forEach(p => {
+        playersScores.push(new PlayerScore(p.name, p.sumScores))
+    })   
+    playersScores.sort((a, b) => b.score - a.score)
+    standingsIcon.forEach(el => el.textContent = '')
+    standingsName.forEach(el => el.textContent = '')
+    standingsScore.forEach(el => el.textContent = '')
+    for (i = 0; i < playersScores.length; i++) {
+        standingsIcon[i].textContent = standingsIconArr[i]
+        standingsName[i].textContent = playersScores[i].name
+        standingsScore[i].textContent = `${playersScores[i].score} pts`
+    }
 }
 
 document.addEventListener('DOMContentLoaded', main)
