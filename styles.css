@@ -325,6 +325,11 @@ input:checked + .slider:before {
 	color: var(--c-red);
 	text-decoration-line: underline;
 	cursor: pointer;
+	/*visibility: hidden;*/
+}
+
+.player:hover .player__delete {
+	visibility: visible;
 }
 
 .player__add {

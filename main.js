@@ -22,6 +22,7 @@ class Player {
             longestRoute: false,
             stations: 0,
         }
+        this.sumScores = [0,0,0,0]
 
         this.buildTemplate()
         this.initiateEvents()
@@ -57,7 +58,7 @@ class Player {
         this.elms.routes.forEach(r => r.addEventListener('keyup', (e) => { this.updateRoutesScore(r.dataset.completed, r.value) }) )
         this.elms.longestRoute.addEventListener('click', (e) => { this.updateLongestRouteScore() })
         this.elms.stations.addEventListener('keyup', (e) => { this.updateStationsScore() })
-        document.addEventListener('click', (e) => { this.toggleDeleteBtn(e) })
+        //document.addEventListener('click', (e) => { this.toggleDeleteBtn(e) })
         this.elms.deleteBtn.addEventListener('click', (e) => { this.deletePlayer() })
     }
 
@@ -79,25 +80,29 @@ class Player {
             sum += parseInt(this.scores.trains[key] | 0) * trainPoints[key]
         })
         this.elms.trainsScore.textContent = `${sum} points`
+        this.sumScores[0] = sum
     }
 
     updateRoutesScore(cmpl, num) {
         this.scores.routes[cmpl] = addNums(num)
         let sum = ((this.scores.routes.completed) | 0) - ((this.scores.routes.uncompleted | 0))
         this.elms.routesScore.textContent = `${sum} points`
+        this.sumScores[1] = sum
     }
 
     updateLongestRouteScore() {
         this.scores.longestRoute = this.elms.longestRoute.checked
-        if (this.scores.longestRoute) 
-            this.elms.longestRouteScore.textContent = `${longestRoutePoints} points` 
-        else this.elms.longestRouteScore.textContent = `0 points` 
+        let sum
+        this.scores.longestRoute ? sum = longestRoutePoints : sum = 0
+        this.elms.longestRouteScore.textContent = `${sum} points`
+        this.sumScores[2] = sum 
     }
     
     updateStationsScore() {
         this.scores.stations = this.elms.stations.value
         let sum = parseInt(this.scores.stations | 0) * stationPoints
-        this.elms.stationsScore.textContent = `${sum} points` 
+        this.elms.stationsScore.textContent = `${sum} points`
+        this.sumScores[3] = sum 
     }
 
     toggleDeleteBtn(el) {
@@ -124,11 +129,11 @@ const prepereDOMElements = () => {
     addPlayer = document.querySelector('.player__add')
     addPlayerBtn = document.querySelector('.player__add__btn')
     players = [new Player, new Player]
+    standings = document.querySelector('.standings__table')
 }
 
 const prepereDOMEvents = () => {
     addPlayerBtn.addEventListener('click', addNewPlayer)
-
 }
 
 const addNewPlayer = () => {
