@@ -44,6 +44,7 @@ class Player {
         this.elms['longestRouteScore'] = newPlayer.querySelector('[data-score="longestRoute"]')
         this.elms['stations'] = newPlayer.querySelector('[data-field-type="stations"]')
         this.elms['stationsScore'] = newPlayer.querySelector('[data-score="stations"]')
+        this.elms['deleteBtn'] = newPlayer.querySelector('.player__delete')
         this.elms['html'] = newPlayer
         
     }
@@ -56,6 +57,8 @@ class Player {
         this.elms.routes.forEach(r => r.addEventListener('keyup', (e) => { this.updateRoutesScore(r.dataset.completed, r.value) }) )
         this.elms.longestRoute.addEventListener('click', (e) => { this.updateLongestRouteScore() })
         this.elms.stations.addEventListener('keyup', (e) => { this.updateStationsScore() })
+        document.addEventListener('click', (e) => { this.toggleDeleteBtn(e) })
+        this.elms.deleteBtn.addEventListener('click', (e) => { this.deletePlayer() })
     }
 
     updateName() {
@@ -95,6 +98,19 @@ class Player {
         this.scores.stations = this.elms.stations.value
         let sum = parseInt(this.scores.stations | 0) * stationPoints
         this.elms.stationsScore.textContent = `${sum} points` 
+    }
+
+    toggleDeleteBtn(el) {
+        if (this.elms.html.contains(el.target))  
+        this.elms.deleteBtn.classList.remove('hide')
+        else this.elms.deleteBtn.classList.add('hide')
+    }
+
+    deletePlayer() {
+       // debugger
+        console.log(players.indexOf(this))
+        players.splice(players.indexOf(this), 1)
+        debugger
     }
 }
 
