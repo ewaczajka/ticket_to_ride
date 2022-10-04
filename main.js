@@ -16,7 +16,7 @@ class Player {
             longestRoute: false,
             stations: 0,
         }
-        this.sumScores = [0,0,0,0]
+        this.sumScores = [0,0,0,0] // [0] trains, [1] routes, [2] longestRoute, [3] stations
 
         this.buildTemplate()
         this.initiateEvents()
@@ -57,6 +57,7 @@ class Player {
     updateName() {
         this.name = this.elms.name.value
         this.elms.logoLetter.textContent = this.name.charAt(0).toUpperCase()
+        updatePlayersScores()
     }
 
     updateColor(color) {
@@ -73,6 +74,7 @@ class Player {
         })
         this.elms.trainsScore.textContent = `${sum} points`
         this.sumScores[0] = sum
+        updatePlayersScores()
     }
 
     updateRoutesScore(cmpl, num) {
@@ -80,21 +82,23 @@ class Player {
         let sum = ((this.scores.routes.completed) | 0) - ((this.scores.routes.uncompleted | 0))
         this.elms.routesScore.textContent = `${sum} points`
         this.sumScores[1] = sum
+        updatePlayersScores()
     }
 
     updateLongestRouteScore() {
         this.scores.longestRoute = this.elms.longestRoute.checked
-        let sum
-        this.scores.longestRoute ? sum = longestRoutePoints : sum = 0
+        let sum = this.scores.longestRoute ? longestRoutePoints : 0
         this.elms.longestRouteScore.textContent = `${sum} points`
         this.sumScores[2] = sum 
+        updatePlayersScores()
     }
     
     updateStationsScore() {
         this.scores.stations = this.elms.stations.value
         let sum = parseInt(this.scores.stations | 0) * stationPoints
         this.elms.stationsScore.textContent = `${sum} points`
-        this.sumScores[3] = sum 
+        this.sumScores[3] = sum
+        updatePlayersScores() 
     }
 }
 
@@ -124,11 +128,8 @@ const prepereDOMElements = () => {
     standingsName = document.querySelectorAll('.standings__row__name')
     standingsScore = document.querySelectorAll('.standings__row__score')
 }
-
 const prepereDOMEvents = () => {
     addPlayerBtn.addEventListener('click', addNewPlayer)
-    document.addEventListener('keyup', updatePlayersScores)
-    document.addEventListener('click', updatePlayersScores)
 }
 
 const addNewPlayer = () => {
@@ -143,8 +144,7 @@ const deletePlayer = (e) => {
 }
 
 const addNums = (str) => {
-    let sum = 0
-    for (let i of str.split(/[, +;]/)) { sum += parseInt(i | 0)}
+    let sum = str.split(/[, +;]/).reduce((a, b) => a + parseInt(b | 0), 0)
     return sum
 }
 
